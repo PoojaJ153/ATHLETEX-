@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coach Profile | AthleteX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        /* ... (Your existing CSS) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background: url("image5.jpg") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #050506;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .separator {
+            border-bottom: 2px solid white;
+            margin: 15px 0;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #040405;
+            color: white;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #030304;
+        }
+        .file-preview {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .file-preview img,
+        .file-preview video {
+            width: 100px;
+            height: 100px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Coach Profile</h1>
+
+        <form id="coachForm">
+            <h2>Personal Information</h2>
+            <div class="separator"></div>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter full name" required />
+
+            <div class="separator"></div>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required />
+
+            <div class="separator"></div>
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" placeholder="Enter phone number" required />
+
+            <div class="separator"></div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter email" required />
+
+            <h2>Coaching Expertise</h2>
+            <div class="separator"></div>
+            <label for="sport">Sport Specialization:</label>
+            <input type="text" id="sport" placeholder="Enter sport specialization" />
+
+            <div class="separator"></div>
+            <label for="experience">Years of Experience:</label>
+            <input type="number" id="experience" placeholder="Enter years of experience" />
+
+            <h2>Schedule & Availability</h2>
+            <div class="separator"></div>
+            <label for="availability">Available Days & Time:</label>
+            <textarea id="availability" placeholder="Specify available days and times" rows="2"></textarea>
+
+            <h2>Player Feedback & Reviews</h2>
+            <div class="separator"></div>
+            <label for="feedback">Testimonials:</label>
+            <textarea id="feedback" placeholder="Enter player reviews or feedback" rows="3"></textarea>
+
+            <h2>Media & Portfolio</h2>
+            <div class="separator"></div>
+            <label for="media-upload">Upload Media (Images/Videos):</label>
+            <input type="file" id="media-upload" accept="image/*,video/*" multiple />
+            <div class="file-preview" id="mediaPreview"></div>
+
+            <button class="btn" type="submit" onclick="location.href='about.html';">Save Profile</button>
+        </form>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+          apiKey: "AIzaSyAfUyrTDfHRZyuUagqOvOwrTeq7gYJ0D_4",
+          authDomain: "athelet-90a81.firebaseapp.com",
+          databaseURL: "https://athelet-90a81-default-rtdb.firebaseio.com",
+          projectId: "athelet-90a81",
+          storageBucket: "athelet-90a81.firebasestorage.app",
+          messagingSenderId: "746894229669",
+          appId: "1:746894229669:web:19cc3af311f54e20b78d4c",
+          measurementId: "G-XH9BFLMGXE"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.getElementById('coachForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const contact = document.getElementById('contact').value;
+            const email = document.getElementById('email').value;
+            const sport = document.getElementById('sport').value;
+            const experience = document.getElementById('experience').value;
+            const availability = document.getElementById('availability').value;
+            const feedback = document.getElementById('feedback').value;
+            const mediaFiles = document.getElementById('media-upload').files;
+
+            const mediaFileNames = Array.from(mediaFiles).map(file => file.name);
+
+            database.ref('coachProfiles/').push({
+                name: name,
+                dob: dob,
+                contact: contact,
+                email: email,
+                sport: sport,
+                experience: experience,
+                availability: availability,
+                feedback: feedback,
+                mediaFileNames: mediaFileNames,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                alert('Profile saved successfully!');
+            }).catch((error)=>{
+                alert('Profile save failed. Please try again.');
+                console.error("Firebase Error:", error);
+            });
+        });
+        
+    </script>
+</body>
+</html>
