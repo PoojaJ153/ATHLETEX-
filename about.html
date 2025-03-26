@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AthleteX - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: relative;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px;
+        }
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background-color: #111;
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            width: 150px;
+            padding: 10px;
+        }
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        .section {
+            padding: 50px;
+            text-align: center;
+            display: none;
+        }
+        .active-section {
+            display: block;
+        }
+        
+        /* About Section Styles */
+        .about-header {
+            font-size: 36px;
+            
+            font-weight: 700;
+            text-align: center;
+            color: #ffffff;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        
+        .about-container {
+            max-width: 900px;
+            margin: auto;
+            background: #1e1e1e;
+            background: url("image6.jpg") no-repeat center center/cover;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .about-container h2 {
+            color: #060303;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .about-container p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #090202;
+            text-align: justify;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+            padding: 10px;
+        }
+        
+        .feature-box {
+            text-align: center;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            width: 28%;
+            box-shadow: 0px 3px 6px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #ffffff;
+        }
+        
+        .feature-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-box i {
+            font-size: 30px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .feature-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .feature-box p {
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+        
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feature-box {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Matches Section Styles */
+        #matches {
+            background: url("image6.jpg") no-repeat center center/cover;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #121212;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .matches-header {
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        .matches-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .match-card {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .register-button {
+            background: #ffffff;
+            color: #121212;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: left;
+            border: 1px solid #ffffff;
+            position: relative;
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            background: #121212;
+            color: #ffffff;
+            border-radius: 6px;
+        }
+
+        .register-button-modal {
+            width: 100%;
+            background: #ffffff;
+            color: #121212;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        @media (max-width: 600px) {
+            .modal-content {
+                width: 90%;
+            }
+            
+            .back-button {
+                top: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AthleteX</div>
+            <ul class="nav-links">
+                <li><a onclick="showSection('about')">About</a></li>
+                <li><a onclick="showSection('matches')">Matches</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+        <div class="mobile-nav" id="mobileMenu">
+            <a onclick="showSection('about')">About</a>
+            <a onclick="showSection('matches')">Matches</a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section active-section">
+        <div class="about-header">About AthleteX</div>
+        <div class="about-container">
+            <h2>Connecting Athletes with Opportunities</h2>
+            <p>
+                AthleteX is a premier networking platform designed exclusively for athletes,
+                coaches, and recruiters. Whether you're an athlete looking for the right
+                team or a coach searching for top talent, AthleteX bridges the gap by
+                providing a dedicated space for showcasing skills, achievements, and career milestones.
+            </p>
+            <p>
+                Our platform empowers athletes to create professional profiles, share
+                video highlights, receive endorsements from coaches, and connect with
+                recruiters and sponsors. AthleteX ensures every player gets the
+                visibility they deserve in the competitive sports world.
+            </p>
+
+            <div class="features">
+                <div class="feature-box">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>For Athletes</h3>
+                    <p>Create a professional profile, showcase skills, and find teams.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <h3>For Coaches</h3>
+                    <p>Search for top talent, build strong teams, and connect with players.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-handshake"></i>
+                    <h3>For Recruiters</h3>
+                    <p>Identify promising athletes and offer career opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Matches Section -->
+    <section id="matches" class="section">
+        <button class="back-button" onclick="showSection('about')">
+            <i class="fa fa-arrow-left"></i> Back
+        </button>
+
+        <div class="matches-header">Upcoming Matches</div>
+
+        <div class="matches-container">
+            <div class="match-card">
+                <h3>TCF Trophy</h3>
+                <p>Location: Tiruchengode</p>
+                <button class="register-button" onclick="openModal('TCF Trophy')">Register</button>
+            </div>
+
+            <div class="match-card">
+                <h3>Champion League</h3>
+                <p>Location: Chennai</p>
+                <button class="register-button" onclick="openModal('Champion League')">Register</button>
+            </div>
+
+            <div class="match-card">
+                <h3>Super Cup</h3>
+                <p>Location: Coimbatore</p>
+                <button class="register-button" onclick="openModal('Super Cup')">Register</button>
+            </div>
+
+            <div class="match-card">
+                <h3>Elite Championship</h3>
+                <p>Location: Madurai</p>
+                <button class="register-button" onclick="openModal('Elite Championship')">Register</button>
+            </div>
+
+            <div class="match-card">
+                <h3>State Level Championship</h3>
+                <p>Location: Bengaluru</p>
+                <button class="register-button" onclick="openModal('State Level Championship')">Register</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <div class="modal-header">Register for <span id="modalMatchName"></span></div>
+
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Number</label>
+                        <input type="tel" id="contact" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <button type="submit" class="register-button-modal">Register</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+        }
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active-section');
+            
+            // Hide mobile menu if open
+            document.getElementById('mobileMenu').style.display = 'none';
+        }
+        
+        // Show about section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('about');
+        });
+
+        // Matches section functions
+        function openModal(matchName) {
+            document.getElementById("modalMatchName").innerText = matchName;
+            document.getElementById("registerModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("registerModal").style.display = "none";
+        }
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Registration Successful!");
+            closeModal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Profile | AthleteX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: url('image3.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #0c0d0f;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .separator {
+            border-bottom: 2px solid white;
+            margin: 15px 0;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #04080f;
+            color: white;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #020409;
+        }
+        .file-preview {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .file-preview img {
+            width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Player Profile</h1>
+        <form id="playerForm">
+            <h2>Personal Information</h2>
+            <div class="separator"></div>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter full name" required>
+
+            <div class="separator"></div>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required>
+
+            <div class="separator"></div>
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" placeholder="Enter phone number" required>
+
+            <div class="separator"></div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter email" required>
+
+            <div class="separator"></div>
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <h2>Skill Information</h2>
+            <div class="separator"></div>
+            <label for="sport">Sport Specialization:</label>
+            <input type="text" id="sport" placeholder="Enter sport specialization">
+
+            <div class="separator"></div>
+            <label for="skills">Key Skills:</label>
+            <textarea id="skills" placeholder="List key skills" rows="3"></textarea>
+
+            <h2>Performance & Achievements</h2>
+            <div class="separator"></div>
+            <label for="achievements">Top Achievements:</label>
+            <textarea id="achievements" placeholder="Enter achievements" rows="3"></textarea>
+
+            <div class="separator"></div>
+            <label for="goals">Performance Goals:</label>
+            <textarea id="goals" placeholder="Enter performance goals" rows="3"></textarea>
+
+            <h2>Upload Documents</h2>
+            <div class="separator"></div>
+            <label for="documents">Upload Performance Certificates:</label>
+            <input type="file" id="documents" multiple>
+
+            <div class="separator"></div>
+            <label for="photos">Upload Photos:</label>
+            <input type="file" id="photos" accept="image/*" multiple onchange="previewImages(event)">
+
+            <div class="file-preview" id="imagePreview"></div>
+
+            <div class="button-group">
+                <button type="button" class="btn" onclick="goBack()">Back</button>
+                <button class="btn" type="submit" onclick="location.href='about.html';">Save Profile</button>
+            </div>
+
+            <button class="btn hidden" id="nextButton" onclick="goNext()">Next</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImages(event) {
+            let preview = document.getElementById("imagePreview");
+            preview.innerHTML = "";
+
+            Array.from(event.target.files).forEach(file => {
+                let img = document.createElement("img");
+                img.src = URL.createObjectURL(file);
+                preview.appendChild(img);
+            });
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function goNext() {
+            window.location.href = "nextPage.html"; // Change this to the actual next page URL
+        }
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfUyrTDfHRZyuUagqOvOwrTeq7gYJ0D_4",
+            authDomain: "athelet-90a81.firebaseapp.com",
+            databaseURL: "https://athelet-90a81-default-rtdb.firebaseio.com",
+            projectId: "athelet-90a81",
+            storageBucket: "athelet-90a81.firebasestorage.app",
+            messagingSenderId: "746894229669",
+            appId: "1:746894229669:web:19cc3af311f54e20b78d4c",
+            measurementId: "G-XH9BFLMGXE"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.getElementById('playerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const contact = document.getElementById('contact').value;
+            const email = document.getElementById('email').value;
+
+            database.ref('playerProfiles/').push({
+                name, dob, contact, email,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                alert('Profile saved successfully!');
+                document.getElementById('nextButton').classList.remove('hidden');
+            }).catch((error) => {
+                alert('Profile save failed. Please try again.');
+                console.error("Firebase Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>
